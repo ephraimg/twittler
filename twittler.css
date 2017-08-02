@@ -112,6 +112,7 @@ nav {
 .tweetBox {
 	float: left;
 	padding: 30px 40px;
+	width: 580px;
 	overflow: auto;
 }
 
@@ -142,7 +143,7 @@ textarea {
 	font: italic lighter 30px Arial, sans-serif;
 }
 
-.user, .currentUser {
+.user, .currentUser, .hashtag {
 	cursor: pointer;
 	color: rgb(61, 134, 255);
 }

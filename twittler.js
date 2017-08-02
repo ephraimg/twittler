@@ -14,7 +14,8 @@ $(document).ready(function(){
     $user.text('@' + tweet.user);
     $user.appendTo($tweet);
     var $message = $('<div class="tweetBody"></div>');
-    $message.text(tweet.message);
+    $message.append(tweet.message.replace(/(^|\s)(#[a-z\d-]+)/ig, 
+      '<span class="hashtag"> ' + '$2' + '</span>'));
     $message.appendTo($tweet);
     var $date = $('<div class="tweetDate"></div>');
     $date.text(moment(tweet.created_at).fromNow());
@@ -45,6 +46,16 @@ $(document).ready(function(){
     })
   }
 
+  var refreshAll = function () {
+    // remember the scroll position
+    var old_scroll = $(window).scrollTop();
+    $('.tweet').show(); 
+    showNewTweets();
+    updateTimestamps();
+    //restore scroll position
+    $(document).scrollTop(old_scroll); 
+  }
+
   // populate page with initial tweets
   var index = 0;
   while(index <= streams.home.length - 1){
@@ -52,7 +63,6 @@ $(document).ready(function(){
     displayTweet(tweet);
     index += 1;
   }
-
 
   // populate "following" list
   for (let i = 0; i < window.users.length; i++) {
@@ -65,12 +75,7 @@ $(document).ready(function(){
   // "refresh" button action
   $('.refreshFeed').on('click', function () {
     animateButtonPress($(this));
-    // remember the scroll position
-    var old_scroll = $(window).scrollTop(); 
-    showNewTweets();
-    updateTimestamps();
-    //restore scroll position
-    $(document).scrollTop(old_scroll); 
+    refreshAll();
   });
 
 
@@ -94,16 +99,34 @@ $(document).ready(function(){
 
   // show a user's feed on click
   $('*').on('click', '.user', function() {
+    refreshAll();
+    // remember the scroll position
+    var old_scroll = $(window).scrollTop(); 
     var theUser = $(this).text().trim();
     $('.tweet').hide();
     $('.tweet').filter(function() {
       return $(this).find('.user').text() === theUser;
     }).show();
+    //restore scroll position
+    $(document).scrollTop(old_scroll);
   });
 
 
-
-
+  // show hashtagged tweets on click
+  $('*').on('click', '.hashtag', function() {
+    refreshAll();
+    // remember the scroll position
+    var old_scroll = $(window).scrollTop();  
+    var theTag = $(this).closest('span').text();
+    console.log('the tag is: ', theTag);
+    console.log('this closest hashtag text is: ', $(this).closest('span').text());
+    $('.tweet').hide();
+    $('.tweet').filter(function() {
+      return $(this).find('span').text() === theTag;
+    }).show();
+    //restore scroll position
+    $(document).scrollTop(old_scroll);
+  });
 
 
 });
