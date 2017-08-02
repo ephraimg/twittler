@@ -4,6 +4,8 @@
     <script src="jquery.js"></script>
     <script src="data_generator.js"></script>
     <script src="twittler.js"></script>
+    <script src="moment.min.js"></script>
+    <script src="jquery.animate-shadow.js"></script>
     <link rel="stylesheet" type="text/css" href="twittler.css">
   </head>
   <body>
@@ -11,18 +13,18 @@
       <p class="logo">twittler  * * * </p>
     </div>
     <div class="main">
-      <div class="tweetBox cf">
+      <div class="tweetBox">
       </div><!--
-      --><nav class="cf">
-      <p class="currentUser user">@your_username </p>
-      <br>
+      --><nav>
+      <p class="currentUser user">@your_username</p>
       <hr>
-      <br>
       <textarea class="userTweetInput"></textarea>
-      <button class="userTweetButton">post!</button>
-      <br>
+      <button class="userTweetButton">post</button>
       <hr>
-      <button class="refreshFeed">refresh feed!</button>
+      <button class="refreshFeed">refresh feed</button>
+      <hr>
+      <p>following:</p>
+      <div class="following"></div>
       </nav>
 
     </div>
